@@ -18,6 +18,7 @@ from sklearn.utils import Bunch
 
 
 _ATLASES = [
+    'aal3v1',
     'aal',
     'aicha',
     'desikan_killiany',
@@ -62,11 +63,14 @@ def get_atlas(atlastype, cache=True):
 
     # get the path to atlas + label files shipped with package
     # resource_filename ensures that we're getting the correct path
-    data_dir = resource_filename('atlasreader', 'data/atlases')
+    # data_dir = resource_filename('atlasreader', 'data/atlases')
+    data_dir = op.join(op.split(__file__)[0], 'data/atlases')
     atlas_path = op.join(data_dir, 'atlas_{0}.nii.gz'.format(atlastype))
     label_path = op.join(data_dir, 'labels_{0}.csv'.format(atlastype))
 
     if not all(op.exists(p) for p in [atlas_path, label_path]):
+        print(atlas_path)
+        print(label_path)
         raise ValueError('{} is not a valid atlas. Please check inputs and '
                          'try again.'.format(atlastype))
 
